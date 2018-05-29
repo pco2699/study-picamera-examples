@@ -12,7 +12,8 @@ class FaceDetector(object):
         time.sleep(2.0)
 
         # opencvの顔分類器(CascadeClassifier)をインスタンス化する
-        self.face_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/haarcascade_frontalface_default.xml')
+        self.face_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/hhaarcascade_frontalface_default.xml')
+        self.eye_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/haarcascade_eye.xml')
 
     def __del__(self):
         self.vs.stop()
@@ -40,6 +41,11 @@ class FaceDetector(object):
         # 顔の位置を描画する
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-
+            if len(self.argvs) >= 2 and "eyes" in self.argvs:
+                roi_gray = gray[y:y + h, x:x + w]
+                roi_color = frame[y:y + h, x:x + w]
+                eyes = self.eye_cascade.detectMultiScale(roi_gray)
+                for (ex, ey, ew, eh) in eyes:
+                    cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
         # frameを戻り値として返す
         return frame
