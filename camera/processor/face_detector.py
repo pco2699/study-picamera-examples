@@ -12,7 +12,7 @@ class FaceDetector(object):
         time.sleep(2.0)
 
         # opencvの顔分類器(CascadeClassifier)をインスタンス化する
-        self.face_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/hhaarcascade_frontalface_default.xml')
+        self.face_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/haarcascade_frontalface_default.xml')
         self.eye_cascade = cv2.CascadeClassifier('camera/processor/model/haarcascades/haarcascade_eye.xml')
 
     def __del__(self):
